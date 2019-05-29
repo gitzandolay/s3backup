@@ -49,6 +49,8 @@ if [ -s "$BACKUP_DIR/$BACKUP_FILE" ]
 		# Copy backup tar file to s3 bucket
 		aws s3 cp $BACKUP_DIR/$BACKUP_FILE $BACKUP_BUCKET
 		echo "$DATE : Uploading backup tar file $BACKUP_FILE to $BACKUP_BUCKET " >> $LOG_FILE
+		echo "$DATE : Removing backup tar file $BACKUP_FILE from $BACKUP_DIR " >> $LOG_FILE
+                rm "$BACKUP_DIR/$BACKUP_FILE"
 	else
 		echo "$DATE : $BACKUP_FILE archive was NOT created...." >> $LOG_FILE
 		echo "$DATE : Backup FAILED !!!" >> $LOG_FILE
