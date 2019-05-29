@@ -16,13 +16,13 @@
 BACKUP_DIR=""
 #
 # The destination s3 bucket - where the backup file will be placed
-# BACKUP_BUCKET="s3://$BUCKET_NAME"
+# BACKUP_BUCKET="s3://BUCKET_NAME"
 BACKUP_BUCKET=""
 #
 # Backup filename variables
 DATE=`date`
 BACKUP_FILE="BACKUP_$(date +"%Y-%m-%d_%H:%M:%S").tar.gz"
-# Email account
+# Email recipient of daily status email on success or failure of job.
 # EMAIL_ACCOUNT="user@foo.com"
 EMAIL_ACCOUNT=""
 # Create the dedicated log file
