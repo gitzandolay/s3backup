@@ -34,12 +34,12 @@ if [[ ! -e /var/log/s3backup.log ]]
 fi
 # Status message when backup starts
 echo "$DATE : Backup STARTED ... " >> $LOG_FILE
-echo "$DATE : Contents of $BACKUP_DIR will be zipped and copied to $BACKUP_BUCKET" >> $LOG_FILE
+echo "$DATE : Contents of $BACKUP_DIR will be archived, compressed and then copied to $BACKUP_BUCKET" >> $LOG_FILE
 #
-# Create the backup file
+# Create the backup/archive file
 tar -cpzf $BACKUP_DIR/$BACKUP_FILE $BACKUP_DIR
 #
-# Status message after backup file should have been created
+# Status message after backup/archive file should have been created
 echo "$DATE : Backup file $BACKUP_FILE should be created" >> $LOG_FILE
 #
 # Verify backup file was created
@@ -52,7 +52,7 @@ if [ -s "$BACKUP_DIR/$BACKUP_FILE" ]
 		echo "$DATE : Removing backup tar file $BACKUP_FILE from $BACKUP_DIR " >> $LOG_FILE
                 rm "$BACKUP_DIR/$BACKUP_FILE"
 	else
-		echo "$DATE : $BACKUP_FILE archive was NOT created...." >> $LOG_FILE
+		echo "$DATE : $BACKUP_FILE archive was NOT created !!!" >> $LOG_FILE
 		echo "$DATE : Backup FAILED !!!" >> $LOG_FILE
 		grep "$DATE : " $LOG_FILE | mail -s "Backup FAILED !!!" $EMAIL_ACCOUNT
 		exit
@@ -80,9 +80,9 @@ if [ "$EXISTS" = "$BACKUP_FILE" ]
 			fi
 		done
 		echo "$DATE : Backup SUCCESSFUL ..." >> $LOG_FILE
-		grep "$DATE : " $LOG_FILE | mail -s "Backup to s3 SUCCESSFUL..." $EMAIL_ACCOUNT
+		grep "$DATE : " $LOG_FILE | mail -s "Backup to s3 SUCCESSFUL ..." $EMAIL_ACCOUNT
 	else
-		echo "$DATE : Upload of $BACKUP_FILE to $BACKUP_BUCKET FAILED ...." >> $LOG_FILE
+		echo "$DATE : Upload of $BACKUP_FILE to $BACKUP_BUCKET FAILED !!!" >> $LOG_FILE
 		echo "$DATE : Backup FAILED !!!" >> $LOG_FILE
 		grep "$DATE : " $LOG_FILE | mail -s "Backup FAILED !!!" $EMAIL_ACCOUNT
 		exit
