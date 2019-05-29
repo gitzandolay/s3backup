@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# This script will backup an existing ec2 filesystem dirictory to an existing aws s3 folder.
+# This script will backup an existing ec2 filesystem directory to an existing aws s3 folder.
 # The script needs to be run from cron every morning @ 5 AM. Place the script in the following dir
 # and add a entry to the ec2-user's crontabs to match the following:
 # Crontab to run s3backup.sh daily at 5AM.
