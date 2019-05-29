@@ -50,8 +50,10 @@ if [ -s "$BACKUP_DIR/$BACKUP_FILE" ]
 		aws s3 cp $BACKUP_DIR/$BACKUP_FILE $BACKUP_BUCKET
 		echo "$DATE : Uploading backup tar file $BACKUP_FILE to $BACKUP_BUCKET " >> $LOG_FILE
 	else
+		echo "$DATE : $BACKUP_FILE archive was NOT created...." >> $LOG_FILE
 		echo "$DATE : Backup FAILED !!!" >> $LOG_FILE
-		mail -s "Backup FAILED !!!" $EMAIL_ACCOUNT
+		grep "$DATE : " $LOG_FILE | mail -s "Backup FAILED !!!" $EMAIL_ACCOUNT
+		exit
 fi		
 #
 # Verify the backup file was copied to s3 bucket		
@@ -78,5 +80,8 @@ if [ "$EXISTS" = "$BACKUP_FILE" ]
 		echo "$DATE : Backup SUCCESSFUL ..." >> $LOG_FILE
 		grep "$DATE : " $LOG_FILE | mail -s "Backup to s3 SUCCESSFUL..." $EMAIL_ACCOUNT
 	else
-		mail -s "Backup file upload to $BACKUP_BUCKET FAILED !!!" $EMAIL_ACCOUNT
+		echo "$DATE : Upload of $BACKUP_FILE to $BACKUP_BUCKET FAILED ...." >> $LOG_FILE
+		echo "$DATE : Backup FAILED !!!" >> $LOG_FILE
+		grep "$DATE : " $LOG_FILE | mail -s "Backup FAILED !!!" $EMAIL_ACCOUNT
+		exit
 fi
